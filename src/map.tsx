@@ -1,21 +1,17 @@
 import React, { useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import { useMap } from './contexts/map-context';
 
-export const Map = () => {
+export const MapComponent: React.FC = () => {
+  const { map } = useMap();
 
   useEffect(() => {
-    mapboxgl.accessToken = 'pk.eyJ1IjoiYXdpZWRlbm1hbiIsImEiOiJjbHZ5MzhubTQybHF6MnFtZ3UyOHN5YWNtIn0._FWHh3PNLamSgT1X5Mn2Lw';
+    if (map) {
+      // Example: Add a marker to the map
+      new mapboxgl.Marker().setLngLat([0, 0]).addTo(map);
+    }
+  }, [map]);
 
-    const map = new mapboxgl.Map({
-      container: 'map', // container id
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [-74.5, 40],
-      zoom: 9,
-    });
-
-    return () => map.remove();
-  }, []);
-
-  return <div id="map" style={{ width: '100vw', height: '100vh' }} />;
+  return <div style={{ width: '100%', height: '90vh' }} />;
 };

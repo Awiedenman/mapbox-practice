@@ -1,8 +1,10 @@
-import { Map } from './map';
-export const App = () => {
-  return (
-    <>
-      <Map />
-    </>
-  )
-}
+import { Layout } from './layout';
+import { MapProvider } from './contexts/map-context';
+
+export const App = () => (
+  <>
+    <MapProvider>
+      <Layout />
+    </MapProvider>
+  </>
+);
