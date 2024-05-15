@@ -27,15 +27,11 @@ const basemapConfig: BasemapConfig[] = [
 ];
 
 export const BasemapSwitcherList = () => {
-  const map = useMap();
-  console.log('map1:: ', map)
+  const { map, setMapInstance } = useMap();
 
-  const switchLayer = (event: React.SyntheticEvent): void => {
-    //TODO: map is null here.
-    console.log('map2:: ', map)
+  const switchLayer = (basemapId: string): void => {
     if (map && event) {
-      // const layerId = event.target.id;
-      // map.setStyle('mapbox://styles/mapbox/' + layerId);
+      map.setStyle('mapbox://styles/mapbox/' + basemapId);
     }
   }
   console.log('baseMapConfig:: ', basemapConfig)
@@ -44,8 +40,8 @@ export const BasemapSwitcherList = () => {
     <ul>
       {basemapConfig.length
         && basemapConfig.map((basemap) => (
-          <li>
-            <input type="radio" name="rtoggle" id={basemap.id} onChange={switchLayer} />
+          <li style={{ listStyleType: 'none' }}>
+            <input type="radio" name="rtoggle" id={basemap.id} onChange={() => switchLayer(basemap.id)} />
             <label htmlFor={basemap.id}>{basemap.name}</label>
           </li>
         ))

@@ -3,7 +3,6 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { BasemapSwitcher } from './basemap-switcher';
 import { useMap } from './contexts/map-context';
-import { MapComponent } from './map';
 
 export const Layout = () => {
   const map = useMap();
@@ -17,7 +16,6 @@ export const Layout = () => {
 
   return (
     <div>
-      {/* <MapComponent /> */}
       <BasemapSwitcher />
     </div>
   )

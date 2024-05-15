@@ -1,5 +1,6 @@
 import React, { createContext, useRef, useEffect, useContext, RefObject, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 interface MapContextType {
   map: mapboxgl.Map | null;
@@ -38,6 +39,7 @@ export const MapProvider: React.FC<MapProviderProps> = ({ children }) => {
 
     mapInstance.on('load', () => {
       setMap(mapInstance)
+      mapInstance.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
     });
 
     return () => {
@@ -45,7 +47,7 @@ export const MapProvider: React.FC<MapProviderProps> = ({ children }) => {
         mapInstance.remove();
       }
     };
-  }, []);
+  }, [mapContainerRef.current]);
 
   const setMapInstance = (map: mapboxgl.Map | null) => {
     setMap(map);
@@ -53,9 +55,8 @@ export const MapProvider: React.FC<MapProviderProps> = ({ children }) => {
 
   return (
     <MapContext.Provider value={{ map, setMapInstance }}>
-      <div ref={mapContainerRef} style={{ width: '100%', height: '100%' }}>
-        {children}
-      </div>
+      {children}
+      <div className="map-container" ref={mapContainerRef} style={{ width: '100vw', height: '100vh' }} />
     </MapContext.Provider>
   );
 };
